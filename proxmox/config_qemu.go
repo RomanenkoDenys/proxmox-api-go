@@ -104,7 +104,7 @@ func (config ConfigQemu) CreateVm(vmr *VmRef, client *Client) (err error) {
 		params["bios"] = config.Bios
 	}
 
-	if config.Balloon >= 1 {
+	if config.Balloon >= 0 {
 		params["balloon"] = config.Balloon
 	}
 	
@@ -226,11 +226,11 @@ func (config ConfigQemu) UpdateConfig(vmr *VmRef, client *Client) (err error) {
 		configParams["bios"] = config.Bios
 	}
 
-	if config.Balloon >= 1 {
+	if config.Balloon >= 0 {
 		configParams["balloon"] = config.Balloon
-	} else {
-		deleteParams = append(deleteParams, "balloon")
-	}
+	} //else {
+//		deleteParams = append(deleteParams, "balloon")
+//	}
 	
 	if config.QemuVcpus >= 1 {
 		configParams["vcpus"] = config.QemuVcpus
@@ -870,8 +870,9 @@ func (c ConfigQemu) CreateQemuDisksParams(
 		if diskID == 0 && cloned {
 			continue
 		}
+
 		diskConfParam := QemuDeviceParam{
-			"media=disk",
+//			"media=disk",
 		}
 
 		// Device name.
